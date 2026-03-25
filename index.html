@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Style Gallery — Design Showcase</title>
+  <meta name="description" content="Explore 5 iconic UI design styles: Bauhaus, Memphis Revival, Neobrutalism, Skeuomorphism, and Neumorphism — each beautifully showcased as an interactive tile." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital@0;1&family=Cabinet+Grotesk:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ────────────────────────────────────────────────
+       RESET & TOKENS
+    ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: rgba(255,255,255,0.08);
+      --text-primary: #f0eee8;
+      --text-muted: rgba(240,238,232,0.45);
+      --accent: #c8ff6e;
+      --accent2: #ff6ec8;
+      --gutter: clamp(20px, 4vw, 60px);
+      --radius-card: 24px;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Cabinet Grotesk', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ────────────────────────────────────────────────
+       NOISE GRAIN OVERLAY
+    ──────────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ────────────────────────────────────────────────
+       AMBIENT GLOW BLOBS
+    ──────────────────────────────────────────────── */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+      animation: blobDrift 18s ease-in-out infinite alternate;
+    }
+    .blob-1 { width: 500px; height: 500px; background: #7c3aed; top: -150px; left: -100px; animation-delay: 0s; }
+    .blob-2 { width: 400px; height: 400px; background: #0ea5e9; bottom: -100px; right: -80px; animation-delay: -6s; }
+    .blob-3 { width: 300px; height: 300px; background: #f59e0b; top: 40%; left: 50%; transform: translate(-50%,-50%); animation-delay: -12s; }
+
+    @keyframes blobDrift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(40px, 30px) scale(1.08); }
+    }
+
+    /* ────────────────────────────────────────────────
+       HEADER
+    ──────────────────────────────────────────────── */
+    header {
+      position: relative;
+      z-index: 10;
+      padding: clamp(48px, 8vw, 96px) var(--gutter) clamp(32px, 5vw, 56px);
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(200,255,110,0.3);
+      border-radius: 999px;
+      padding: 6px 16px;
+      margin-bottom: 28px;
+      animation: fadeSlideDown 0.6s ease both;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      animation: fadeSlideDown 0.7s ease 0.1s both;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, #8bff3d 40%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      margin-top: 20px;
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-inline: auto;
+      line-height: 1.65;
+      animation: fadeSlideDown 0.7s ease 0.2s both;
+    }
+
+    .header-stats {
+      display: flex;
+      justify-content: center;
+      gap: clamp(24px, 4vw, 56px);
+      margin-top: 40px;
+      animation: fadeSlideDown 0.7s ease 0.3s both;
+    }
+
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ────────────────────────────────────────────────
+       DIVIDER
+    ──────────────────────────────────────────────── */
+    .divider {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto clamp(40px, 6vw, 72px);
+      padding: 0 var(--gutter);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ────────────────────────────────────────────────
+       GRID
+    ──────────────────────────────────────────────── */
+    .gallery {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+      gap: clamp(16px, 2.5vw, 28px);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--gutter) clamp(60px, 10vw, 120px);
+    }
+
+    /* ────────────────────────────────────────────────
+       STYLE CARD
+    ──────────────────────────────────────────────── */
+    .style-card {
+      position: relative;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--surface);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.35s ease,
+                  border-color 0.25s ease;
+      cursor: pointer;
+      animation: cardReveal 0.6s ease both;
+    }
+
+    .style-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .style-card:nth-child(1) { animation-delay: 0.1s; }
+    .style-card:nth-child(2) { animation-delay: 0.18s; }
+    .style-card:nth-child(3) { animation-delay: 0.26s; }
+    .style-card:nth-child(4) { animation-delay: 0.34s; }
+    .style-card:nth-child(5) { animation-delay: 0.42s; }
+
+    /* THUMBNAIL AREA */
+    .card-thumb {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .card-thumb-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .style-card:hover .card-thumb-inner {
+      transform: scale(1.06);
+    }
+
+    /* OPEN LINK ICON */
+    .card-open-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 5;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .style-card:hover .card-open-btn {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .card-open-btn svg { width: 15px; height: 15px; }
+
+    /* STYLE NUMBER BADGE */
+    .card-num {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 5;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* CARD BODY */
+    .card-body {
+      padding: 22px 22px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-header-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+      max-width: 100%;
+    }
+
+    .card-era {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid;
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .explore-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s ease;
+    }
+    .style-card:hover .explore-link { gap: 10px; }
+
+    .explore-link::after {
+      content: '→';
+      font-size: 14px;
+    }
+
+    .complexity-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .complexity-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+    }
+
+
+    /* ══════════════════════════════════════════════
+       INDIVIDUAL CARD THEMES (thumbnail previews)
+    ══════════════════════════════════════════════ */
+
+    /* ─── 1. BAUHAUS ─── */
+    .card--bauhaus .card-thumb {
+      background: #f5f0e4;
+    }
+    .card--bauhaus .card-title { color: #e53935; }
+    .card--bauhaus .card-era { color: #1f6fe5; border-color: rgba(31,111,229,0.4); }
+    .card--bauhaus .explore-link { color: #e53935; }
+
+    .bauhaus-preview {
+      position: relative;
+      width: 220px;
+      height: 160px;
+    }
+    .bauhaus-preview .bh-card {
+      position: absolute;
+      inset: 10px;
+      border: 5px solid #0c0c0c;
+      background: linear-gradient(90deg, #1f6fe5 0 14px, #fffdf7 14px 100%);
+      box-shadow: 8px 8px 0 #0c0c0c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px;
+    }
+    .bauhaus-preview .bh-line {
+      height: 6px;
+      border-radius: 0;
+      background: #0c0c0c;
+    }
+    .bauhaus-preview .bh-line:nth-child(1) { width: 80%; background: #e53935; }
+    .bauhaus-preview .bh-line:nth-child(2) { width: 65%; background: #1f6fe5; }
+    .bauhaus-preview .bh-line:nth-child(3) { width: 70%; background: #0c0c0c; }
+    .bauhaus-preview .bh-circle {
+      position: absolute;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: #f4bf18;
+      border: 4px solid #0c0c0c;
+      top: -14px; right: -14px;
+    }
+    .bauhaus-preview .bh-rect {
+      position: absolute;
+      width: 36px; height: 22px;
+      background: #e53935;
+      border: 3px solid #0c0c0c;
+      bottom: -8px; left: -10px;
+      transform: rotate(-12deg);
+    }
+    .bauhaus-preview .bh-slider {
+      width: 90%;
+      height: 10px;
+      border: 3px solid #0c0c0c;
+      border-radius: 0;
+      background: repeating-linear-gradient(90deg, #fff 0 8px, #f2f2f2 8px 16px);
+      position: relative;
+    }
+    .bauhaus-preview .bh-thumb {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: #e53935;
+      border: 2px solid #0c0c0c;
+      top: 50%; left: 40%;
+      transform: translateY(-50%);
+    }
+
+    /* bauhaus complexity */
+    .card--bauhaus .complexity-dot:nth-child(-n+3) { background: #e53935; }
+
+    /* ─── 2. MEMPHIS REVIVAL ─── */
+    .card--memphis .card-thumb {
+      background: #fff4d8;
+    }
+    .card--memphis .card-title { color: #ff6b6b; }
+    .card--memphis .card-era { color: #2f54eb; border-color: rgba(47,84,235,0.4); }
+    .card--memphis .explore-link { color: #ff6b6b; }
+
+    .memphis-preview {
+      position: relative;
+      width: 220px;
+      height: 160px;
+    }
+    .memphis-preview .mem-card {
+      position: absolute;
+      inset: 12px;
+      border: 4px solid #111;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #2f54eb 0 10px, #fffdf7 10px 100%);
+      box-shadow: 7px 7px 0 #111, 0 0 0 4px rgba(255,255,255,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 10px;
+    }
+    .memphis-preview .mem-line {
+      height: 6px;
+      border-radius: 3px;
+    }
+    .memphis-preview .mem-line:nth-child(1) { width: 75%; background: #ff6b6b; }
+    .memphis-preview .mem-line:nth-child(2) { width: 60%; background: #2f54eb; }
+    .memphis-preview .mem-line:nth-child(3) { width: 68%; background: #111; }
+    .memphis-preview .mem-deco-sq {
+      position: absolute;
+      width: 32px; height: 32px;
+      border-radius: 8px; transform: rotate(18deg);
+      background: #26d9c8;
+      border: 3px solid #111;
+      top: -10px; left: -10px;
+    }
+    .memphis-preview .mem-deco-circle {
+      position: absolute;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: #ffcb3a;
+      border: 3px solid #111;
+      bottom: -12px; right: -12px;
+    }
+    .memphis-preview .mem-pill {
+      position: absolute;
+      top: -14px; left: 50%; transform: translateX(-50%);
+      background: #ff7ee2;
+      border: 3px solid #111;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #111;
+      font-family: var(--font-display);
+      white-space: nowrap;
+    }
+
+    .card--memphis .complexity-dot:nth-child(-n+4) { background: #ff6b6b; }
+
+    /* ─── 3. NEOBRUTALISM ─── */
+    .card--neo .card-thumb {
+      background: #f7f5ef;
+    }
+    .card--neo .card-title { color: #f0eee8; }
+    .card--neo .card-era { color: #d63031; border-color: rgba(214,48,49,0.4); }
+    .card--neo .explore-link { color: #d63031; }
+
+    .neo-preview {
+      position: relative;
+      width: 220px;
+      height: 160px;
+    }
+    .neo-preview .neo-card {
+      position: absolute;
+      inset: 12px;
+      border: 4px solid #111;
+      border-radius: 4px;
+      background: #fefaf2;
+      box-shadow: 9px 9px 0 #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px;
+    }
+    .neo-preview .neo-line { height: 8px; border-radius: 0; border: 2px solid #111; }
+    .neo-preview .neo-line:nth-child(1) { width: 78%; background: #fddd35; }
+    .neo-preview .neo-line:nth-child(2) { width: 62%; background: #55efc4; }
+    .neo-preview .neo-line:nth-child(3) { width: 70%; background: #fd79a8; }
+    .neo-preview .neo-btn {
+      margin-top: 4px;
+      padding: 4px 16px;
+      background: #111;
+      color: #fefaf2;
+      border: 2px solid #111;
+      border-radius: 0;
+      font-size: 11px;
+      font-weight: 900;
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 3px 3px 0 #d63031;
+    }
+    .neo-preview .neo-stamp {
+      position: absolute;
+      top: 2px; right: 4px;
+      width: 32px; height: 32px;
+      border: 3px solid #111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      background: #fddd35;
+    }
+
+    .card--neo .complexity-dot:nth-child(-n+4) { background: #d63031; }
+
+    /* ─── 4. SKEUOMORPHISM ─── */
+    .card--skeu .card-thumb {
+      background: linear-gradient(135deg, #2d2d2d 0%, #4a4a4a 50%, #3a3a3a 100%);
+    }
+    .card--skeu .card-title { color: #f4d03f; }
+    .card--skeu .card-era { color: #f4d03f; border-color: rgba(244,208,63,0.4); }
+    .card--skeu .explore-link { color: #f4d03f; }
+
+    .skeu-preview {
+      position: relative;
+      width: 220px;
+      height: 160px;
+    }
+    .skeu-preview .sk-card {
+      position: absolute;
+      inset: 12px;
+      border-radius: 18px;
+      background: linear-gradient(160deg, #5a5a5a 0%, #2e2e2e 100%);
+      border: 2px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.15),
+        inset 0 -2px 4px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 14px;
+    }
+    .skeu-preview .sk-line {
+      height: 5px;
+      border-radius: 3px;
+    }
+    .skeu-preview .sk-line:nth-child(1) { width: 75%; background: linear-gradient(90deg, #f39c12, #f4d03f); box-shadow: 0 1px 3px rgba(244,208,63,0.4); }
+    .skeu-preview .sk-line:nth-child(2) { width: 60%; background: rgba(255,255,255,0.25); }
+    .skeu-preview .sk-line:nth-child(3) { width: 68%; background: rgba(255,255,255,0.15); }
+    .skeu-preview .sk-btn {
+      margin-top: 4px;
+      padding: 4px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: linear-gradient(160deg, #686868 0%, #3c3c3c 100%);
+      color: rgba(255,255,255,0.8);
+      font-size: 10px;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+
+    .card--skeu .complexity-dot:nth-child(-n+5) { background: #f4d03f; }
+
+    /* ─── 5. NEUMORPHISM ─── */
+    .card--neu .card-thumb {
+      background: #dfe7f1;
+    }
+    .card--neu .card-title { color: #4a5b74; }
+    .card--neu .card-era { color: #7d93be; border-color: rgba(125,147,190,0.4); }
+    .card--neu .explore-link { color: #5a78aa; }
+
+    .neu-preview {
+      position: relative;
+      width: 220px;
+      height: 160px;
+    }
+    .neu-preview .nu-card {
+      position: absolute;
+      inset: 12px;
+      border-radius: 26px;
+      background: #e6edf6;
+      box-shadow:
+        14px 14px 28px #bfccd9,
+        -14px -14px 28px #f8fbff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+    }
+    .neu-preview .nu-line {
+      height: 8px;
+      border-radius: 999px;
+    }
+    .neu-preview .nu-line:nth-child(1) {
+      width: 75%;
+      background: #e6edf6;
+      box-shadow: inset 4px 4px 8px #bfccd9, inset -4px -4px 8px #f8fbff;
+    }
+    .neu-preview .nu-line:nth-child(2) {
+      width: 58%;
+      background: #e6edf6;
+      box-shadow: inset 3px 3px 6px #bfccd9, inset -3px -3px 6px #f8fbff;
+    }
+    .neu-preview .nu-line:nth-child(3) {
+      width: 66%;
+      background: #e6edf6;
+      box-shadow: inset 3px 3px 6px #bfccd9, inset -3px -3px 6px #f8fbff;
+    }
+    .neu-preview .nu-btn {
+      margin-top: 4px;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: #e6edf6;
+      box-shadow:
+        8px 8px 16px #bfccd9,
+        -8px -8px 16px #f8fbff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .card--neu .complexity-dot:nth-child(-n+2) { background: #7d93be; }
+
+
+    /* ────────────────────────────────────────────────
+       FOOTER
+    ──────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 32px var(--gutter) 48px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .footer-text span { color: var(--accent); }
+
+    /* ────────────────────────────────────────────────
+       ANIMATIONS
+    ──────────────────────────────────────────────── */
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ────────────────────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: 1fr; }
+      .header-stats { gap: 24px; }
+      .stat-num { font-size: 1.5rem; }
+
+      .card-thumb { height: 190px; }
+
+      .card-body { padding: 16px 16px 14px; gap: 8px; }
+
+      .card-title { font-size: 1.15rem; }
+
+      .card-footer { padding-top: 10px; }
+    }
+
+    @media (min-width: 768px) and (max-width: 1080px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1081px) {
+      /* First card spans 2 columns for featured treatment */
+      .style-card:first-child {
+        grid-column: span 2;
+      }
+      .style-card:first-child .card-thumb { height: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ambient blobs -->
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
+  <div class="blob blob-3" aria-hidden="true"></div>
+
+  <!-- ─── HEADER ─── -->
+  <header>
+    <div class="eyebrow">Design Systems Gallery</div>
+    <h1>UI <span class="highlight">Style</span><br>Showcase</h1>
+    <p class="subtitle">Five iconic design philosophies, each brought to life as an interactive birthday card experience.</p>
+    <div class="header-stats">
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Design Styles</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">60+</span>
+        <span class="stat-label">Years of Design</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Project Folder</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── SECTION DIVIDER ─── -->
+  <div class="divider" aria-hidden="true">
+    <div class="divider-line"></div>
+    <span class="divider-label">Browse All Styles</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- ─── GALLERY GRID ─── -->
+  <main class="gallery" id="gallery">
+
+    <!-- ══ CARD 1: BAUHAUS ══ -->
+    <a class="style-card card--bauhaus" href="./Bauhaus/index.html" id="card-bauhaus">
+      <div class="card-thumb">
+        <span class="card-num">01</span>
+        <div class="card-open-btn" aria-label="Open Bauhaus">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+        <div class="card-thumb-inner">
+          <!-- Mini Bauhaus preview -->
+          <div class="bauhaus-preview">
+            <div class="bh-circle"></div>
+            <div class="bh-rect"></div>
+            <div class="bh-card">
+              <div class="bh-line"></div>
+              <div class="bh-line"></div>
+              <div class="bh-line"></div>
+              <div class="bh-slider"><div class="bh-thumb"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-header-row">
+          <h2 class="card-title">Bauhaus</h2>
+          <span class="card-era">1919–1933</span>
+        </div>
+        <p class="card-desc">Form follows function. Bold primary colors — red, blue, yellow — meet strict geometric shapes and heavy black borders. Asymmetric layouts rooted in Swiss grid theory create visual hierarchy with architectural precision.</p>
+        <div class="card-tags">
+          <span class="tag">Geometric</span>
+          <span class="tag">Primary Colors</span>
+          <span class="tag">Grid-Based</span>
+          <span class="tag">High Contrast</span>
+        </div>
+        <div class="card-footer">
+          <span class="explore-link" style="color:#e53935;">Explore Style</span>
+          <div class="complexity-dots" title="Complexity: 3/5">
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- ══ CARD 2: MEMPHIS REVIVAL ══ -->
+    <a class="style-card card--memphis" href="./Memphis Revival/index.html" id="card-memphis">
+      <div class="card-thumb">
+        <span class="card-num">02</span>
+        <div class="card-open-btn" aria-label="Open Memphis Revival">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+        <div class="card-thumb-inner">
+          <div class="memphis-preview">
+            <div class="mem-deco-sq"></div>
+            <div class="mem-card">
+              <div class="mem-pill">HAPPY B-DAY</div>
+              <div class="mem-line"></div>
+              <div class="mem-line"></div>
+              <div class="mem-line"></div>
+            </div>
+            <div class="mem-deco-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-header-row">
+          <h2 class="card-title">Memphis Revival</h2>
+          <span class="card-era">1981–Present</span>
+        </div>
+        <p class="card-desc">Anti-rational maximalism. Playful geometric shapes collide with bold, unapologetic colors — coral, teal, mustard, electric blue. Diagonal patterns and decorative elements celebrate chaos over order.</p>
+        <div class="card-tags">
+          <span class="tag">Maximalist</span>
+          <span class="tag">Playful</span>
+          <span class="tag">Geometric</span>
+          <span class="tag">Retro-Futurism</span>
+        </div>
+        <div class="card-footer">
+          <span class="explore-link" style="color:#ff6b6b;">Explore Style</span>
+          <div class="complexity-dots" title="Complexity: 4/5">
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- ══ CARD 3: NEOBRUTALISM ══ -->
+    <a class="style-card card--neo" href="./Neobrutalism/index.html" id="card-neo">
+      <div class="card-thumb">
+        <span class="card-num">03</span>
+        <div class="card-open-btn" aria-label="Open Neobrutalism">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+        <div class="card-thumb-inner">
+          <div class="neo-preview">
+            <div class="neo-card">
+              <div class="neo-stamp">🎂</div>
+              <div class="neo-line"></div>
+              <div class="neo-line"></div>
+              <div class="neo-line"></div>
+              <div class="neo-btn">CLICK ME</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-header-row">
+          <h2 class="card-title">Neobrutalism</h2>
+          <span class="card-era">2020–Present</span>
+        </div>
+        <p class="card-desc">Digital brutalism reborn. Raw, visible structure with deliberately exposed borders and offset shadows. Acid-yellow, pastel-pink, and mint green challenge "polished" UI convention with bold typographic aggression.</p>
+        <div class="card-tags">
+          <span class="tag">Raw Aesthetic</span>
+          <span class="tag">Offset Shadows</span>
+          <span class="tag">Acid Palette</span>
+          <span class="tag">Anti-design</span>
+        </div>
+        <div class="card-footer">
+          <span class="explore-link" style="color:#d63031;">Explore Style</span>
+          <div class="complexity-dots" title="Complexity: 4/5">
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- ══ CARD 4: SKEUOMORPHISM ══ -->
+    <a class="style-card card--skeu" href="./Skeuomorphism/index.html" id="card-skeu">
+      <div class="card-thumb">
+        <span class="card-num">04</span>
+        <div class="card-open-btn" aria-label="Open Skeuomorphism">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+        <div class="card-thumb-inner">
+          <div class="skeu-preview">
+            <div class="sk-card">
+
+              <div class="sk-line"></div>
+              <div class="sk-line"></div>
+              <div class="sk-line"></div>
+              <div class="sk-btn">PLAY</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-header-row">
+          <h2 class="card-title">Skeuomorphism</h2>
+          <span class="card-era">2007–2013</span>
+        </div>
+        <p class="card-desc">Digital mimics the physical world. Tactile depth through multiple drop shadows, layered gradients, and inset highlights simulate real materials — brushed metal, leather, polished glass — creating tangible richness.</p>
+        <div class="card-tags">
+          <span class="tag">Tactile</span>
+          <span class="tag">Gradients</span>
+          <span class="tag">Dark Theme</span>
+          <span class="tag">Realistic</span>
+        </div>
+        <div class="card-footer">
+          <span class="explore-link" style="color:#f4d03f;">Explore Style</span>
+          <div class="complexity-dots" title="Complexity: 5/5">
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    <!-- ══ CARD 5: NEUMORPHISM ══ -->
+    <a class="style-card card--neu" href="./neumorphisim/index.html" id="card-neu">
+      <div class="card-thumb">
+        <span class="card-num">05</span>
+        <div class="card-open-btn" aria-label="Open Neumorphism">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </div>
+        <div class="card-thumb-inner">
+          <div class="neu-preview">
+            <div class="nu-card">
+              <div class="nu-line"></div>
+              <div class="nu-line"></div>
+              <div class="nu-line"></div>
+              <div class="nu-btn">🎁</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-header-row">
+          <h2 class="card-title">Neumorphism</h2>
+          <span class="card-era">2019–Present</span>
+        </div>
+        <p class="card-desc">The softest UI paradigm. Elements appear extruded from the background itself via precise dual-shadow technique — one light, one dark. Everything is rounded, muted, and monochromatic, evoking a dreamlike softness.</p>
+        <div class="card-tags">
+          <span class="tag">Soft Shadows</span>
+          <span class="tag">Monochromatic</span>
+          <span class="tag">Extruded UI</span>
+          <span class="tag">Minimal</span>
+        </div>
+        <div class="card-footer">
+          <span class="explore-link" style="color:#5a78aa;">Explore Style</span>
+          <div class="complexity-dots" title="Complexity: 2/5">
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+            <div class="complexity-dot"></div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <p class="footer-text">8555 Design Gallery &mdash; <span>5 Styles</span> &mdash; Built with pure HTML & CSS</p>
+  </footer>
+
+</body>
+</html>
